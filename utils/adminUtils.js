@@ -8,7 +8,7 @@ async function addAdmin(userId, username) {
 
     const newAdmin = new Admin({ userId, username });
     await newAdmin.save();
-    return { success: true, message: "✅ Admin muvaffaqiyatli qo‘shildi!" };
+    return { success: true, message: "✅ Admin muvaffaqiyatli qo'shildi!" };
 }
 
 async function isAdmin(userId) {
