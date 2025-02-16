@@ -61,7 +61,7 @@ bot.start(async ctx => {
         ["📜 Yo'riqnoma", "❓ Yordam"]
     ]).resize().oneTime(false);
 
-    // await ctx.reply("👋 Salom " + ctx.chat.first_name, menuKeyboard);    
+    await ctx.reply("👋 Salom " + ctx.chat.first_name, menuKeyboard);    
 });
 
 bot.hears(["👮 Admin", "👥 Foydalanuvchilar", "🔗 Referal", "💰 Hisobim", "📜 Yo'riqnoma", "❓ Yordam"], async (ctx) => {
