@@ -1,7 +1,9 @@
 const { Telegraf, Markup } = require("telegraf");
 
-const YOUR_BOT_TOKEN = '7790091290:AAEyQTucOcDrN1F7_4RvUYf0QLXdlm1MJMA'
-const bot = new Telegraf(YOUR_BOT_TOKEN);
+const app = require('./server');
+
+const BOT_TOKEN = '7790091290:AAEyQTucOcDrN1F7_4RvUYf0QLXdlm1MJMA'
+const bot = new Telegraf(BOT_TOKEN);
 
 async function isAddChannel(ctx) {
     const channel = "my_biznes2"; 
@@ -59,7 +61,7 @@ bot.start(async ctx => {
         ["📜 Yo'riqnoma", "❓ Yordam"]
     ]).resize().oneTime(false);
 
-    await ctx.reply("👋 Salom " + ctx.chat.first_name, menuKeyboard);
+    // await ctx.reply("👋 Salom " + ctx.chat.first_name, menuKeyboard);    
 });
 
 bot.hears(["👮 Admin", "👥 Foydalanuvchilar", "🔗 Referal", "💰 Hisobim", "📜 Yo'riqnoma", "❓ Yordam"], async (ctx) => {
@@ -75,4 +77,4 @@ bot.hears(["👮 Admin", "👥 Foydalanuvchilar", "🔗 Referal", "💰 Hisobim"
     await ctx.reply(responses[ctx.message.text]);
 });
 
-bot.launch();
+bot.launch().then(() => console.log("✅ Bot ishga tushdi!")).catch(err => console.error("❌ Xatolik:", err));
