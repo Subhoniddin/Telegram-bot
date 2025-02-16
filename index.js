@@ -1,10 +1,19 @@
 const { Telegraf, Markup } = require("telegraf");
+const app = require("./server");
+require("dotenv").config();
+const mongoose = require("mongoose");
+const { addAdmin, isAdmin } = require("./utils/adminFunctions"); // 🔥 Import qildik
 
-const app = require('./server');
+mongoose.connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => console.log("✅ MongoDB muvaffaqiyatli ulandi"))
+  .catch(err => console.error("❌ MongoDB xatosi:", err));
 
 const BOT_TOKEN = '7790091290:AAEyQTucOcDrN1F7_4RvUYf0QLXdlm1MJMA'
 const bot = new Telegraf(BOT_TOKEN);
 
+// ✅ Kanalga obuna tekshirish funksiyasi
 async function isAddChannel(ctx) {
     const channel = "dostlar_2001_36"; 
     if (!ctx.from) return console.log("Botlar kirishi taqiqlanadi :(");
@@ -26,31 +35,7 @@ async function isAddChannel(ctx) {
     }
 }
 
-const main = (ctx) => {
-    const keyboardinln = Markup.inlineKeyboard([
-        [   
-            Markup.button.callback("Sotish", "button1"),
-            Markup.button.callback("Sotib olish", "button2")
-        ],
-        [
-            Markup.button.callback("Bazor", "bazor"),
-            Markup.button.callback("Statistika", "Statistika"),  
-            Markup.button.callback("Ko'rish", "ko'rish")
-        ]
-    ]);
-    
-    ctx.reply(`Salom, ${ctx.chat.first_name}!`, keyboardinln);
-    
-    bot.action("button1", (ctx) => ctx.reply("13440"));
-    bot.action("button2", (ctx) => ctx.reply("13200"));
-    
-    bot.action("bazor", (ctx) => {
-        ctx.reply("Bazorlarni tahlil qiling", Markup.inlineKeyboard([
-            [Markup.button.callback("Binance", "binance"), Markup.button.callback("Bitget", "bitget")]
-        ]));
-    });
-};
-
+// ✅ Bot start komandasi
 bot.start(async ctx => {
     const isSubscribed = await isAddChannel(ctx); 
     if (!isSubscribed) return;
@@ -64,6 +49,18 @@ bot.start(async ctx => {
     await ctx.reply("👋 Salom " + ctx.chat.first_name, menuKeyboard);    
 });
 
+// ✅ Admin qo‘shish uchun buyruq
+bot.command("addadmin", async ctx => {
+    const userId = ctx.message.text.split(" ")[1]; // `/addadmin 123456789`
+    if (!userId) {
+        return ctx.reply("❌ Iltimos, admin qo‘shish uchun ID kiriting! Masalan: `/addadmin 123456789`");
+    }
+
+    const username = ctx.message.from.username || "No username";
+    await addAdmin(ctx, userId, username);
+});
+
+// ✅ Tugmalarni bosganda javob berish
 bot.hears(["👮 Admin", "👥 Foydalanuvchilar", "🔗 Referal", "💰 Hisobim", "📜 Yo'riqnoma", "❓ Yordam"], async (ctx) => {
     const responses = {
         "👮 Admin": "🔹 Adminlar bo'limi",
@@ -77,4 +74,5 @@ bot.hears(["👮 Admin", "👥 Foydalanuvchilar", "🔗 Referal", "💰 Hisobim"
     await ctx.reply(responses[ctx.message.text]);
 });
 
+// ✅ Botni ishga tushiramiz
 bot.launch().then(() => console.log("✅ Bot ishga tushdi!")).catch(err => console.error("❌ Xatolik:", err));
