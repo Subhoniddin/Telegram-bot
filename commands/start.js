@@ -15,7 +15,7 @@ async function startCommand(ctx) {
     }
     if (isMainAdmin(userId)) {
         return showUserAdminPanel(ctx);
-    }u
+    }
 
     // 2️⃣ Agar oddiy user bo'lsa, avval kanalga obuna bo'lganmi, tekshiramiz
     if (!(await isSubscribed(ctx))) {
