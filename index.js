@@ -6,7 +6,7 @@ const BOT_TOKEN = '7790091290:AAEyQTucOcDrN1F7_4RvUYf0QLXdlm1MJMA'
 const bot = new Telegraf(BOT_TOKEN);
 
 async function isAddChannel(ctx) {
-    const channel = "my_biznes2"; 
+    const channel = "dostlar_2001_36"; 
     if (!ctx.from) return console.log("Botlar kirishi taqiqlanadi :(");
     
     try {
