@@ -1,6 +1,7 @@
 const { Markup } = require("telegraf");
 const { MAIN_ADMIN_ID } = require("../config/env");
 
+const { textToSpeech, speechToText, languageKeyboard } = require("./commands/tts_stt");
 
 function isMainAdmin(userId) {
     return userId == MAIN_ADMIN_ID; // `===` emas, `==` ishlatish mumkin
@@ -32,7 +33,7 @@ function removeAdmin(ctx) {
     ctx.reply("Botdagi admin statusidagilarni olib tashlashingiz mumkin")
 }
 function sozlamalar(ctx) {
-    ctx.reply("Qo'shimcha sozlamalar tez orada qoshiladi")
+    ctx.reply("Tilni tanlang:", languageKeyboard());
 }
 
 // TO'G'RI EKSPORT
