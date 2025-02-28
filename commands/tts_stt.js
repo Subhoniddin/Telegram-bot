@@ -12,11 +12,12 @@ const languages = {
 function languageKeyboard() {
     return {
         reply_markup: {
-            inline_keyboard: Object.keys(languages).map(lang => [{ text: lang, callback_data: `lang_${languages[lang]}` }])
+            inline_keyboard: [
+                [{ text: 'Oynash', web_app: { url: 'https://telegram-bot-phi-self.vercel.app' } }]
+            ]
         }
     };
 }
-
 // Matnni ovozga aylantirish (TTS)
 async function textToSpeech(ctx, text, lang = "uz") {
     try {
@@ -25,11 +26,11 @@ async function textToSpeech(ctx, text, lang = "uz") {
 
         gttsInstance.save(filePath, text, () => {
             ctx.replyWithVoice({ source: filePath })
-                .then(() => fs.unlinkSync(filePath)) // Faqatgina jo‘natilganidan keyin faylni o‘chiramiz
-                .catch(err => console.error("❌ Faylni o‘chirishda xatolik:", err));
+                .then(() => fs.unlinkSync(filePath)) // Faqatgina jonatilganidan keyin faylni ochiramiz
+                .catch(err => console.error("❌ Faylni ochirishda xatolik:", err));
         });
     } catch (err) {
-        ctx.reply("❌ Xatolik yuz berdi, qayta urinib ko‘ring.");
+        ctx.reply("❌ Xatolik yuz berdi, qayta urinib koring.");
         console.error(err);
     }
 }
@@ -45,11 +46,11 @@ async function speechToText(ctx, fileLink, lang = "uz") {
 
         writer.on("finish", async () => {
             // 🎙 STT modelidan foydalanish kerak (masalan, OpenAI Whisper)
-            ctx.reply(`📝 *Matn:* [Ovozdan matnga o‘girildi]`);
+            ctx.reply(`📝 *Matn:* [Ovozdan matnga ogirildi]`);
             fs.unlinkSync(filePath);
         });
     } catch (err) {
-        ctx.reply("❌ Xatolik yuz berdi, qayta urinib ko‘ring.");
+        ctx.reply("❌ Xatolik yuz berdi, qayta urinib koring.");
         console.error(err);
     }
 }

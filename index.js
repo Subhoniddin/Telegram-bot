@@ -53,3 +53,5 @@ bot.on("voice", async (ctx) => {
 bot.launch()
     .then(() => console.log("✅ Bot ishga tushdi!"))
     .catch(err => console.error("❌ Xatolik:", err));
+
+    module.exports = bot;
