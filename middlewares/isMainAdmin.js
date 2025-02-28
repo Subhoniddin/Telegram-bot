@@ -38,30 +38,6 @@ function removeAdmin(ctx) {
 }
 function sozlamalar(ctx) {
   ctx.reply("Tilni tanlang:", languageKeyboard());
-  let userLanguages = {};
-
-  bot.on("callback_query", async (ctx) => {
-    const langCode = ctx.callbackQuery.data.split("_")[1];
-    if (langCode) {
-      userLanguages[ctx.from.id] = langCode;
-      ctx.answerCbQuery();
-      ctx.reply(`✅ Til o'zgartirildi: ${langCode.toUpperCase()}`);
-    }
-  });
-
-  // ✍️ Matnni ovozga aylantirish
-  bot.on("text", (ctx) => {
-    const lang = userLanguages[ctx.from.id] || "uz"; // Default O'zbek tili
-    textToSpeech(ctx, ctx.message.text, lang);
-  });
-
-  // 🎙 Ovozdan matnga aylantirish
-  bot.on("voice", async (ctx) => {
-    const fileId = ctx.message.voice.file_id;
-    const fileLink = await ctx.telegram.getFileLink(fileId);
-    const lang = userLanguages[ctx.from.id] || "uz"; // Default O'zbek tili
-    speechToText(ctx, fileLink.href, lang);
-  });
 }
 
 // TO'G'RI EKSPORT

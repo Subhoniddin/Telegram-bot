@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Telegram Mini App</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+    </style>
+</head>
+<body>
+    <h1>Salom, Telegram!</h1>
+    <p>Foydalanuvchi: <span id="username">Yuklanmoqda...</span></p>
+    <button onclick="closeApp()">Yopish</button>
+    <script>
+        // Telegram Web App tayyorligini bildirish
+        window.Telegram.WebApp.ready();
+
+        // Foydalanuvchi ma’lumotlarini olish
+        const user = window.Telegram.WebApp.initDataUnsafe.user;
+        document.getElementById('username').textContent = user ? user.username : 'Anonim';
+
+        // Ilovani yopish funksiyasi
+        function closeApp() {
+            window.Telegram.WebApp.close();
+        }
+    </script>
+</body>
+</html>
